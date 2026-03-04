@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "body": "const char *sqlite3_libversion(void){ return sqlite3_version; }",
+      "call_count": 1,
+      "calls": [],
+      "name": "sqlite3_libversion"
+    }
+  ],
+  "min_call_count": 0,
+  "root": "sqlite3_libversion"
+}

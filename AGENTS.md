@@ -9,7 +9,7 @@ When there are no tests recorded by test.sh, you must run if $(pwd) === $HOME/Pr
     ./sqlite3-src-3510200/rustfixture sqlite-src-3510200/test/extraquick.test
 ```
 For isolating faulty tests, you must edit sqlite3_symbols.txt and the remove #[unsafe(no_mangle)] from the function you are editing - instead of editing the entire function. Split the batch into two halves - run test.sh on BOTH half batches consecutively,  then, if the issue persists split the halves again and 
-This test runs for about 5 minutes, when it's finished and if it's finished with no mistakes - you may proceed onto the next. Elsewise, call python3 tesing/test_logger.py
+This test runs for about 7 minutes, it is only resorted for complex functions. Simple functions may omit it, if there is at least one relevant test being fould. When the test is finished and if it's finished with no mistakes - you may proceed onto the next. Elsewise, call python3 tesing/test_logger.py
 and define the functions you were porting, status of the execution and why, if it does, fails.
 Permutations.test - is not a test. This file returns a list of tests, so, it can neglected during testing.
 If the reimplementation was a success (no test fails) - commit the change

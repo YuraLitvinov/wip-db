@@ -4,8 +4,8 @@
       "body": "int sqlite3_get_autocommit(sqlite3 *db){\n  if( !sqlite3SafetyCheckOk(db) ){\n    (void)sqlite3MisuseError(188789);\n    return 0;\n  }\n  return db->autoCommit;\n}",
       "call_count": 0,
       "calls": [
-        "sqlite3MisuseError",
-        "sqlite3SafetyCheckOk"
+        "sqlite3SafetyCheckOk",
+        "sqlite3MisuseError"
       ],
       "name": "sqlite3_get_autocommit"
     },

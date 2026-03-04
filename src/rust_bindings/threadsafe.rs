@@ -43,7 +43,7 @@
 //!
 use std::os::raw::*;
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sqlite3_threadsafe() -> c_int {
-    todo!()
+    1
 }

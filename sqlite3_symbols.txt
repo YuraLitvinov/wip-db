@@ -2,3 +2,4 @@ sqlite3_blob_bytes
 sqlite3_system_errno
 sqlite3_stmt_isexplain
 sqlite3_soft_heap_limit
+sqlite3_threadsafe

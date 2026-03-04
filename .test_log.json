@@ -100,37 +100,22 @@
       ],
       "status": "pass",
       "current_issue": null
+    },
+    {
+      "timestamp": "2026-03-04T15:43:50.591874",
+      "model": "haiku",
+      "function": "sqlite3_threadsafe",
+      "tests": [],
+      "status": "skipped",
+      "current_issue": null
     }
   ],
   "current": {
-    "timestamp": "2026-03-04T15:37:34.789637",
+    "timestamp": "2026-03-04T15:43:50.591874",
     "model": "haiku",
-    "function": "sqlite3_blob_bytes,sqlite3_system_errno,sqlite3_stmt_isexplain,sqlite3_soft_heap_limit",
-    "tests": [
-      "e_blobbytes.test",
-      "e_blobopen.test",
-      "incrblob3.test",
-      "capi3.test",
-      "walseh1.test",
-      "attach2.test",
-      "avtrans.test",
-      "cache.test",
-      "capi3b.test",
-      "exclusive2.test",
-      "exclusive.test",
-      "incrblob.test",
-      "index4.test",
-      "indexfault.test",
-      "ioerr3.test",
-      "ioerr5.test",
-      "lock2.test",
-      "lock6.test",
-      "malloc5.test",
-      "pageropt.test",
-      "softheap1.test",
-      "sort.test"
-    ],
-    "status": "pass",
+    "function": "sqlite3_threadsafe",
+    "tests": [],
+    "status": "skipped",
     "current_issue": null
   }
 }
