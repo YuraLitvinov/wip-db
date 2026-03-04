@@ -6,6 +6,21 @@ SRC="$PROJ/sqlite-src-3510200"
 TEMP_DIR=$(mktemp -d /tmp/sqlite_so_XXXXXX)
 trap "rm -rf '$TEMP_DIR'" EXIT
 
+# Parse optional function names as arguments
+EXTRA_SYMBOLS=()
+for arg in "$@"; do
+    EXTRA_SYMBOLS+=("$arg")
+done
+
+# Use a temp symbols file if extra symbols were provided
+SYMBOLS_FILE="$PROJ/sqlite3_symbols.txt"
+if [ ${#EXTRA_SYMBOLS[@]} -gt 0 ]; then
+    SYMBOLS_FILE="$TEMP_DIR/sqlite3_symbols_tmp.txt"
+    cp "$PROJ/sqlite3_symbols.txt" "$SYMBOLS_FILE"
+    printf "%s\n" "${EXTRA_SYMBOLS[@]}" >> "$SYMBOLS_FILE"
+    echo "→ Appended ${#EXTRA_SYMBOLS[@]} symbol(s) to temporary symbols file"
+fi
+
 cargo build -q --release
 
 
@@ -20,7 +35,7 @@ cc -fPIC -O3 -g \
 # Rename symbols in the compiled object
 while IFS= read -r sym; do
     objcopy --redefine-sym "${sym}=__c_${sym}" "$SQLITE3_OBJ"
-done < "$PROJ/sqlite3_symbols.txt"
+done < "$SYMBOLS_FILE"
 
 # Verify tungsten_register_mutex exists in Rust staticlib before linking
 # echo "→ checking Rust staticlib exports:"

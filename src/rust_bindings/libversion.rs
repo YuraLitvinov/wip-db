@@ -36,7 +36,21 @@
 //!
 use std::os::raw::*;
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sqlite3_libversion_number() -> c_int {
     3051002
+}
+
+unsafe extern "C" {
+    static sqlite3_version: [c_char; 0];
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sqlite3_libversion() -> *const c_char {
+    unsafe { sqlite3_version.as_ptr() }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sqlite3_sourceid() -> *const c_char {
+    b"2026-01-09 17:27:48 b270f8339eb13b504d0b2ba154ebca966b7dde08e40c3ed7d559749818cbalt1\0".as_ptr() as *const c_char
 }

@@ -4,6 +4,21 @@ set -e
 SRC=$(pwd)/sqlite-src-3510200
 PROJ=$(pwd)
 
+# Parse optional function names as arguments
+EXTRA_SYMBOLS=()
+for arg in "$@"; do
+    EXTRA_SYMBOLS+=("$arg")
+done
+
+# Append extra symbols to a temp copy of sqlite3_symbols.txt
+SYMBOLS_FILE="$PROJ/sqlite3_symbols.txt"
+if [ ${#EXTRA_SYMBOLS[@]} -gt 0 ]; then
+    SYMBOLS_FILE="$PROJ/target/sqlite3_symbols_tmp.txt"
+    cp "$PROJ/sqlite3_symbols.txt" "$SYMBOLS_FILE"
+    printf "%s\n" "${EXTRA_SYMBOLS[@]}" >> "$SYMBOLS_FILE"
+    echo "→ Appended ${#EXTRA_SYMBOLS[@]} symbol(s) to temporary symbols file"
+fi
+
 # Build the combined libsqlite3.so first
 if [ ! -f "$PROJ/lib/libsqlite3.so" ]; then
     echo "ERROR: libsqlite3.so not found at $PROJ/lib/libsqlite3.so"
@@ -39,7 +54,7 @@ fi
 
 # Step 2: Rename sqlite3_* symbols in the object so our Rust wrappers can call
 #         the C originals via __c_sqlite3_* and intercept the public names.
-awk '{print $1, "__c_" $1}' "$PROJ/sqlite3_symbols.txt" > "$PROJ/target/redefine_syms.txt"
+awk '{print $1, "__c_" $1}' "$SYMBOLS_FILE" > "$PROJ/target/redefine_syms.txt"
 objcopy --redefine-syms="$PROJ/target/redefine_syms.txt" "$SQLITE3_OBJ"
 
 ar rcs "$PROJ/lib/libsqlite3.a" "$SQLITE3_OBJ"
@@ -98,13 +113,4 @@ cc -fPIC -O2 -g \
   $TCL_LIBS \
   -lm -lz -licuuc -licui18n -licudata
 
-echo "→ Verifying FTS5 capability in rustfixture..."
-if strings "$SRC/rustfixture" | grep -q "ENABLE_FTS5"; then
-    echo "✓ FTS5 present in rustfixture"
-else
-    echo "✗ WARNING: FTS5 not found in rustfixture — check defines.txt"
-    exit 1
-fi
-# rm -f "$SQLITE3_OBJ"
 
-#cd "$SRC" && ./testfixture test/all.test

@@ -108,12 +108,65 @@
       "tests": [],
       "status": "skipped",
       "current_issue": null
+    },
+    {
+      "timestamp": "2026-03-04T16:28:29.045371",
+      "model": "haiku",
+      "function": "sqlite3_libversion,sqlite3_sourceid",
+      "tests": [],
+      "status": "pass",
+      "current_issue": null
+    },
+    {
+      "timestamp": "2026-03-04T16:28:29.091887",
+      "model": "haiku",
+      "function": "sqlite3_libversion,sqlite3_sourceid",
+      "tests": [
+        "tclsqlite.test"
+      ],
+      "status": "pass",
+      "current_issue": null
+    },
+    {
+      "timestamp": "2026-03-04T16:35:35.339348",
+      "model": "haiku",
+      "function": "sqlite3_stricmp,sqlite3_strnicmp",
+      "tests": [],
+      "status": "pass",
+      "current_issue": null
+    },
+    {
+      "timestamp": "2026-03-04T16:35:35.386261",
+      "model": "haiku",
+      "function": "sqlite3_stricmp,sqlite3_strnicmp",
+      "tests": [
+        "fts4unicode.test",
+        "fts4unicode.test"
+      ],
+      "status": "pass",
+      "current_issue": null
+    },
+    {
+      "timestamp": "2026-03-04T16:45:52.219407",
+      "model": "haiku",
+      "function": "no_new_functions_added",
+      "tests": [],
+      "status": "skipped",
+      "current_issue": null
+    },
+    {
+      "timestamp": "2026-03-04T17:25:32.489660",
+      "model": "haiku",
+      "function": "sqlite3_strglob,sqlite3_strlike",
+      "tests": [],
+      "status": "skipped",
+      "current_issue": null
     }
   ],
   "current": {
-    "timestamp": "2026-03-04T15:43:50.591874",
+    "timestamp": "2026-03-04T17:25:32.489660",
     "model": "haiku",
-    "function": "sqlite3_threadsafe",
+    "function": "sqlite3_strglob,sqlite3_strlike",
     "tests": [],
     "status": "skipped",
     "current_issue": null

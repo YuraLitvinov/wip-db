@@ -75,7 +75,7 @@ if [ ! -f "./create_libsqlite3_so.sh" ]; then
     echo "ERROR: create_libsqlite3_so.sh not found"
     exit 1
 fi
-bash ./create_libsqlite3_so.sh
+bash ./create_libsqlite3_so.sh "${FUNCTION_NAMES[@]}"
 
 # ============================================================================
 # STEP 2: CONDITIONAL TESTFIXTURE REBUILD
@@ -91,7 +91,7 @@ if git diff HEAD sqlite3_symbols.txt 2>/dev/null | grep -q "^[+-]"; then
         echo "  ERROR: testfixture_swap_optimized.sh not found"
         exit 1
     fi
-    bash ./testfixture_swap_optimized.sh
+    bash ./testfixture_swap_optimized.sh "${FUNCTION_NAMES[@]}"
 else
     echo "  → No changes detected (skipping testfixture rebuild)"
 fi
@@ -187,6 +187,18 @@ echo ""
 echo "  Overall Results: $TOTAL_PASSED passed, $TOTAL_FAILED failed"
 if [ $TOTAL_FAILED -gt 0 ]; then
     TEST_STATUS="fail"
+fi
+
+# ============================================================================
+# WRITE FUNCTION NAMES TO sqlite3_symbols.txt (only on success)
+# ============================================================================
+
+if [ "$TEST_STATUS" = "pass" ]; then
+    echo "Writing function names to sqlite3_symbols.txt..."
+    printf "%s\n" "${FUNCTION_NAMES[@]}" > sqlite3_symbols.txt
+    echo "  → Written ${#FUNCTION_NAMES[@]} symbol(s)"
+else
+    echo "Skipping sqlite3_symbols.txt update (tests did not pass)"
 fi
 
 # ============================================================================
