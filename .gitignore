@@ -4,3 +4,4 @@ Cargo.lock
 /lib/
 /testdir
 backbone_*.json
+sqlite3.i

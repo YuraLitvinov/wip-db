@@ -10,7 +10,7 @@
 //!
 use std::os::raw::*;
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn sqlite3_reset_auto_extension() {
-    todo!()
+    // No-op: automatic extensions are not implemented
 }

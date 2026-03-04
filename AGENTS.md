@@ -1,6 +1,6 @@
 Pick out one function from src/rust_bindings/ from any file within the directory that would be the simplest to implement.
 Check sqlite3_symbols.txt whether this function is already implemented - if it, then, proceed with any other function.
-Run ```bash ./sqlite3-traversal *fn-name*``` in pwd, this will emit a backbone_*fn_name*.json. NEVER ignore backbone_*fn_name*.json consisting of all helper functions, that are being called, as well as 
+Run ```bash ./sqlite3-traversal *fn-name*``` in pwd, this will emit a backbone_*fn_name*.json. If output of sqlite3-traversal - skip the function and implement next one. CRITICAL: NEVER ignore backbone_*fn_name*.json consisting of all helper functions, that are being called, as well as 
 called recursively. You must register the file using rust_bindings/mod.rs for the respective file, if a function has been registered - ignore it and think of it as done.
 On simple functions you work in batches of 10, on complex you do not batch and emit one function at a time, running the test.sh command which you also use to log
 what hardships you may have stumbled upon and why it was more complex - if complex, than other tasks. 
