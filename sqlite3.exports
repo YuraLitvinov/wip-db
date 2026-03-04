@@ -1,0 +1,17 @@
+{
+  global:
+    sqlite3Os*;
+    sqlite3Err*;
+    sqlite3_carray_bind;
+    sqlite3_libversion;
+    sqlite3_libversion_number;
+    sqlite3_config;
+    sqlite3_sourceid;
+    sqlite3SharedCacheList;
+    tungsten_register_mutex;
+    SQLITE3_MUTEX_METHODS;
+    sqlite3_*;
+    *;
+  local:
+    *;
+};

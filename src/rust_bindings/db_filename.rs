@@ -1,0 +1,41 @@
+//!
+//! The sqlite3_db_filename(D,N) interface returns a pointer to the filename
+//! associated with database N of connection D.
+//! If there is no attached database N on the database
+//! connection D, or if database N is a temporary or in-memory database, then
+//! this function will return either a NULL pointer or an empty string.
+//! The string value returned by this routine is owned and managed by
+//! the database connection.  The value will be valid until the database N
+//! is DETACH-ed or until the database connection closes.
+//! The filename returned by this function is the output of the
+//! xFullPathname method of the VFS.  In other words, the filename
+//! will be an absolute pathname, even if the filename used
+//! to open the database originally was a URI or relative pathname.
+//! If the filename pointer returned by this routine is not NULL, then it
+//! can be used as the filename input parameter to these routines:
+//! sqlite3_uri_parameter()
+//! sqlite3_uri_boolean()
+//! sqlite3_uri_int64()
+//! sqlite3_filename_database()
+//! sqlite3_filename_journal()
+//! sqlite3_filename_wal()
+//! See also lists of
+//! Objects,
+//! Constants, and
+//! Functions.
+//! Related constants and functions:
+//! - sqlite3_uri_parameter()
+//! - sqlite3_uri_boolean()
+//! - sqlite3_uri_int64()
+//! - sqlite3_filename_database()
+//! - sqlite3_filename_journal()
+//! - sqlite3_filename_wal()
+//!
+use std::os::raw::*;
+
+pub type Sqlite3Filename = c_void;
+
+#[no_mangle]
+pub extern "C" fn sqlite3_db_filename(db: *mut Sqlite3, zDbName: *const c_char) -> sqlite3_filename {
+    todo!()
+}

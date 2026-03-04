@@ -1,0 +1,55 @@
+//!
+//! The sqlite3_file_control() interface makes a direct call to the
+//! xFileControl method for the sqlite3_io_methods object associated
+//! with a particular database identified by the second argument. The
+//! name of the database is "main" for the main database or "temp" for the
+//! TEMP database, or the name that appears after the AS keyword for
+//! databases that are added using the ATTACH SQL command.
+//! A NULL pointer can be used in place of "main" to refer to the
+//! main database file.
+//! The third and fourth parameters to this routine
+//! are passed directly through to the second and third parameters of
+//! the xFileControl method.  The return value of the xFileControl
+//! method becomes the return value of this routine.
+//! A few opcodes for sqlite3_file_control() are handled directly
+//! by the SQLite core and never invoke the
+//! sqlite3_io_methods.xFileControl method.
+//! The SQLITE_FCNTL_FILE_POINTER value for the op parameter causes
+//! a pointer to the underlying sqlite3_file object to be written into
+//! the space pointed to by the 4th parameter.  The
+//! SQLITE_FCNTL_JOURNAL_POINTER works similarly except that it returns
+//! the sqlite3_file object associated with the journal file instead of
+//! the main database.  The SQLITE_FCNTL_VFS_POINTER opcode returns
+//! a pointer to the underlying sqlite3_vfs object for the file.
+//! The SQLITE_FCNTL_DATA_VERSION returns the data version counter
+//! from the pager.
+//! If the second parameter (zDbName) does not match the name of any
+//! open database file, then SQLITE_ERROR is returned.  This error
+//! code is not remembered and will not be recalled by sqlite3_errcode()
+//! or sqlite3_errmsg().  The underlying xFileControl method might
+//! also return SQLITE_ERROR.  There is no way to distinguish between
+//! an incorrect zDbName and an SQLITE_ERROR return from the underlying
+//! xFileControl method.
+//! See also: file control opcodes
+//! See also lists of
+//! Objects,
+//! Constants, and
+//! Functions.
+//! Related constants and functions:
+//! - sqlite3_file_control()
+//! - sqlite3_io_methods
+//! - sqlite3_file_control()
+//! - SQLITE_FCNTL_FILE_POINTER
+//! - sqlite3_file
+//! - SQLITE_FCNTL_JOURNAL_POINTER
+//! - sqlite3_file
+//! - SQLITE_FCNTL_VFS_POINTER
+//! - sqlite3_vfs
+//! - SQLITE_FCNTL_DATA_VERSION
+//!
+use std::os::raw::*;
+
+#[no_mangle]
+pub extern "C" fn sqlite3_file_control(db: *mut Sqlite3, zDbName: *const c_char, op: c_int, ptr: *mut c_void) -> c_int {
+    todo!()
+}
