@@ -18,7 +18,8 @@
 //!
 use std::os::raw::*;
 
-#[no_mangle]
-pub extern "C" fn sqlite3_release_memory(code: c_int) -> c_int {
-    todo!()
+#[unsafe(no_mangle)]
+pub extern "C" fn sqlite3_release_memory(_n: c_int) -> c_int {
+    // No memory management implemented, return 0
+    0
 }

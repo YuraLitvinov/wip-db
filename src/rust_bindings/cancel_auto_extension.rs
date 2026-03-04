@@ -18,8 +18,7 @@ use std::os::raw::*;
 
 pub type EntrypointCallback = Option<unsafe extern "C" fn()>;
 
-#[unsafe(no_mangle)]
-pub extern "C" fn sqlite3_cancel_auto_extension(_x_entry_point: EntrypointCallback) -> c_int {
-    // Return 0: not found (auto-extensions not implemented)
-    0
+#[no_mangle]
+pub extern "C" fn sqlite3_cancel_auto_extension(xEntryPoint: EntrypointCallback) -> c_int {
+    todo!()
 }
