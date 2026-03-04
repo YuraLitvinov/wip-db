@@ -1,0 +1,14 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_cancel_auto_extension(\n  void (*xInit)(void)\n){\n  sqlite3_mutex *mutex = sqlite3MutexAlloc(2);\n  int i;\n  int n = 0;\n  ;\n  if( xInit==0 ) return 0;\n  sqlite3_mutex_enter(mutex);\n  for(i=(int)sqlite3Autoext.nExt-1; i>=0; i--){\n    if( sqlite3Autoext.aExt[i]==xInit ){\n      sqlite3Autoext.nExt--;\n      sqlite3Autoext.aExt[i] = sqlite3Autoext.aExt[sqlite3Autoext.nExt];\n      n++;\n      break;\n    }\n  }\n  sqlite3_mutex_leave(mutex);\n  return n;\n}",
+      "call_count": 0,
+      "calls": [
+        "sqlite3MutexAlloc"
+      ],
+      "name": "sqlite3_cancel_auto_extension"
+    }
+  ],
+  "min_call_count": 2,
+  "root": "sqlite3_cancel_auto_extension"
+}

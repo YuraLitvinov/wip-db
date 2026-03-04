@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_stmt_busy(sqlite3_stmt *pStmt){\n  Vdbe *v = (Vdbe*)pStmt;\n  return v!=0 && v->eVdbeState==2;\n}",
+      "call_count": 2,
+      "calls": [],
+      "name": "sqlite3_stmt_busy"
+    }
+  ],
+  "min_call_count": 0,
+  "root": "sqlite3_stmt_busy"
+}

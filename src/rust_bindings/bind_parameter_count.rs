@@ -24,7 +24,16 @@ use std::os::raw::*;
 
 pub type Sqlite3Stmt = c_void;
 
-#[no_mangle]
-pub extern "C" fn sqlite3_bind_parameter_count(stmt: *mut sqlite3_stmt) -> c_int {
-    todo!()
+#[repr(C)]
+struct Vdbe {
+    nVar: c_int,
+}
+
+pub extern "C" fn sqlite3_bind_parameter_count(stmt: *mut Sqlite3Stmt) -> c_int {
+    if stmt.is_null() {
+        0
+    } else {
+        let p = stmt as *mut Vdbe;
+        unsafe { (*p).nVar }
+    }
 }

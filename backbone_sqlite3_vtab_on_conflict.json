@@ -1,0 +1,22 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_vtab_on_conflict(sqlite3 *db){\n  static const unsigned char aMap[] = {\n    1, 4, 3, 2, 5\n  };\n  if( !sqlite3SafetyCheckOk(db) ) return sqlite3MisuseError(161043);\n  ((void) sizeof ((1==1 && 2==2 && 3==3) ? 1 : 0), __extension__ ({ if (1==1 && 2==2 && 3==3) ; else __assert_fail (\"OE_Rollback==1 && OE_Abort==2 && OE_Fail==3\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  ((void) sizeof ((4==4 && 5==5) ? 1 : 0), __extension__ ({ if (4==4 && 5==5) ; else __assert_fail (\"OE_Ignore==4 && OE_Replace==5\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  ((void) sizeof ((db->vtabOnConflict>=1 && db->vtabOnConflict<=5) ? 1 : 0), __extension__ ({ if (db->vtabOnConflict>=1 && db->vtabOnConflict<=5) ; else __assert_fail (\"db->vtabOnConflict>=1 && db->vtabOnConflict<=5\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  return (int)aMap[db->vtabOnConflict-1];\n}",
+      "call_count": 4,
+      "calls": [
+        "__assert_fail",
+        "sqlite3MisuseError",
+        "sqlite3SafetyCheckOk"
+      ],
+      "name": "sqlite3_vtab_on_conflict"
+    },
+    {
+      "body": "static void logBadConnection(const char *zType){\n  sqlite3_log(21,\n     \"API call with %s database connection pointer\",\n     zType\n  );\n}",
+      "call_count": 2,
+      "calls": [],
+      "name": "logBadConnection"
+    }
+  ],
+  "min_call_count": 2,
+  "root": "sqlite3_vtab_on_conflict"
+}

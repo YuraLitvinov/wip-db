@@ -38,8 +38,8 @@ cc -shared -fPIC -O3 -g \
   -Wl,--no-whole-archive \
   -Wl,--export-dynamic \
   -Wl,--version-script="$PROJ/sqlite3.exports" \
+  -Wl,-init,tungsten_register_mutex \
   -Wl,--allow-multiple-definition \
   -Wl,-rpath,'$ORIGIN' \
   -lm -lpthread -ldl -licuuc -licui18n -licudata \
   -o "$PROJ/lib/libsqlite3.so"
-  #-Wl,-init,tungsten_register_mutex \

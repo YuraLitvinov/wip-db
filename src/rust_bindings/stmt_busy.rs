@@ -27,7 +27,17 @@ use std::os::raw::*;
 
 pub type Sqlite3Stmt = c_void;
 
-#[no_mangle]
-pub extern "C" fn sqlite3_stmt_busy(stmt: *mut sqlite3_stmt) -> c_int {
-    todo!()
+#[repr(C)]
+struct Vdbe {
+    eVdbeState: c_int,
+}
+
+pub extern "C" fn sqlite3_stmt_busy(stmt: *mut Sqlite3Stmt) -> c_int {
+    if stmt.is_null() {
+        0
+    } else {
+        let v = stmt as *mut Vdbe;
+        let vdbe = unsafe { &*v };
+        if vdbe.eVdbeState == 2 { 1 } else { 0 }
+    }
 }

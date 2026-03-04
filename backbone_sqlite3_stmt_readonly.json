@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_stmt_readonly(sqlite3_stmt *pStmt){\n  return pStmt ? ((Vdbe*)pStmt)->readOnly : 1;\n}",
+      "call_count": 1,
+      "calls": [],
+      "name": "sqlite3_stmt_readonly"
+    }
+  ],
+  "min_call_count": 0,
+  "root": "sqlite3_stmt_readonly"
+}

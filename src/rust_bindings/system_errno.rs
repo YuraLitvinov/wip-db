@@ -15,7 +15,19 @@
 //!
 use std::os::raw::*;
 
-#[no_mangle]
+pub type Sqlite3 = c_void;
+
+#[repr(C)]
+struct Sqlite3Struct {
+    iSysErrno: c_int,
+}
+
+#[unsafe(no_mangle)]
 pub extern "C" fn sqlite3_system_errno(db: *mut Sqlite3) -> c_int {
-    todo!()
+    if db.is_null() {
+        0
+    } else {
+        let s = db as *mut Sqlite3Struct;
+        unsafe { (*s).iSysErrno }
+    }
 }

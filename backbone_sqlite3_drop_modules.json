@@ -1,0 +1,165 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_drop_modules(sqlite3 *db, const char** azNames){\n  HashElem *pThis, *pNext;\n  if( !sqlite3SafetyCheckOk(db) ) return sqlite3MisuseError(159864);\n  for(pThis=((&db->aModule)->first); pThis; pThis=pNext){\n    Module *pMod = (Module*)((pThis)->data);\n    pNext = ((pThis)->next);\n    if( azNames ){\n      int ii;\n      for(ii=0; azNames[ii]!=0 && strcmp(azNames[ii],pMod->zName)!=0; ii++){}\n      if( azNames[ii]!=0 ) continue;\n    }\n    createModule(db, pMod->zName, 0, 0, 0);\n  }\n  return 0;\n}",
+      "call_count": 0,
+      "calls": [
+        "sqlite3SafetyCheckOk",
+        "strcmp",
+        "sqlite3MisuseError",
+        "createModule"
+      ],
+      "name": "sqlite3_drop_modules"
+    },
+    {
+      "body": "static __attribute__((noinline)) int apiHandleError(sqlite3 *db, int rc){\n  if( db->mallocFailed || rc==(10 | (12<<8)) ){\n    sqlite3OomClear(db);\n    sqlite3Error(db, 7);\n    return sqlite3NomemError(31914);\n  }\n  return rc & db->errMask;\n}",
+      "call_count": 1,
+      "calls": [
+        "sqlite3OomClear",
+        "sqlite3Error",
+        "sqlite3NomemError"
+      ],
+      "name": "apiHandleError"
+    },
+    {
+      "body": "static __attribute__((noinline)) void sqlite3ErrorFinish(sqlite3 *db, int err_code){\n  if( db->pErr ) sqlite3ValueSetNull(db->pErr);\n  sqlite3SystemError(db, err_code);\n}",
+      "call_count": 1,
+      "calls": [
+        "sqlite3ValueSetNull",
+        "sqlite3SystemError"
+      ],
+      "name": "sqlite3ErrorFinish"
+    },
+    {
+      "body": "int sqlite3OsGetLastError(sqlite3_vfs *pVfs){\n  return pVfs->xGetLastError ? pVfs->xGetLastError(pVfs, 0, 0) : 0;\n}",
+      "call_count": 1,
+      "calls": [
+        "xGetLastError"
+      ],
+      "name": "sqlite3OsGetLastError"
+    },
+    {
+      "body": "static void removeElement(\n  Hash *pH,\n  HashElem *elem\n){\n  struct _ht *pEntry;\n  if( elem->prev ){\n    elem->prev->next = elem->next;\n  }else{\n    pH->first = elem->next;\n  }\n  if( elem->next ){\n    elem->next->prev = elem->prev;\n  }\n  if( pH->ht ){\n    pEntry = &pH->ht[elem->h % pH->htsize];\n    if( pEntry->chain==elem ){\n      pEntry->chain = elem->next;\n    }\n    ((void) sizeof ((pEntry->count>0) ? 1 : 0), __extension__ ({ if (pEntry->count>0) ; else __assert_fail (\"pEntry->count>0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    pEntry->count--;\n  }\n  sqlite3_free( elem );\n  pH->count--;\n  if( pH->count==0 ){\n    ((void) sizeof ((pH->first==0) ? 1 : 0), __extension__ ({ if (pH->first==0) ; else __assert_fail (\"pH->first==0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    ((void) sizeof ((pH->count==0) ? 1 : 0), __extension__ ({ if (pH->count==0) ; else __assert_fail (\"pH->count==0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    sqlite3HashClear(pH);\n  }\n}",
+      "call_count": 1,
+      "calls": [
+        "__assert_fail",
+        "sqlite3HashClear"
+      ],
+      "name": "removeElement"
+    },
+    {
+      "body": "static unsigned int strHash(const char *z){\n  unsigned int h = 0;\n  while( z[0] ){\n    h += 0xdf & (unsigned char)*(z++);\n    h *= 0x9e3779b1;\n  }\n  return h;\n}",
+      "call_count": 1,
+      "calls": [],
+      "name": "strHash"
+    },
+    {
+      "body": "static void mallocWithAlarm(int n, void **pp){\n  void *p;\n  int nFull;\n  ((void) sizeof ((sqlite3_mutex_held(mem0.mutex)) ? 1 : 0), __extension__ ({ if (sqlite3_mutex_held(mem0.mutex)) ; else __assert_fail (\"sqlite3_mutex_held(mem0.mutex)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  ((void) sizeof ((n>0) ? 1 : 0), __extension__ ({ if (n>0) ; else __assert_fail (\"n>0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  nFull = sqlite3Config.m.xRoundup(n);\n  sqlite3StatusHighwater(5, n);\n  if( mem0.alarmThreshold>0 ){\n    sqlite3_int64 nUsed = sqlite3StatusValue(0);\n    if( nUsed >= mem0.alarmThreshold - nFull ){\n      __atomic_store_n((&mem0.nearlyFull),(1),0);\n      sqlite3MallocAlarm(nFull);\n      if( mem0.hardLimit ){\n        nUsed = sqlite3StatusValue(0);\n        if( nUsed >= mem0.hardLimit - nFull ){\n          test_oom_breakpoint(1);\n          *pp = 0;\n          return;\n        }\n      }\n    }else{\n      __atomic_store_n((&mem0.nearlyFull),(0),0);\n    }\n  }\n  p = sqlite3Config.m.xMalloc(nFull);\n  if( p ){\n    nFull = sqlite3MallocSize(p);\n    sqlite3StatusUp(0, nFull);\n    sqlite3StatusUp(9, 1);\n  }\n  *pp = p;\n}",
+      "call_count": 1,
+      "calls": [
+        "xRoundup",
+        "sqlite3StatusUp",
+        "sqlite3StatusValue",
+        "sqlite3MallocAlarm",
+        "sqlite3MallocSize",
+        "sqlite3StatusHighwater",
+        "xMalloc",
+        "__assert_fail",
+        "test_oom_breakpoint"
+      ],
+      "name": "mallocWithAlarm"
+    },
+    {
+      "body": "static int rehash(Hash *pH, unsigned int new_size){\n  struct _ht *new_ht;\n  HashElem *elem, *next_elem;\n  if( new_size*sizeof(struct _ht)>1024 ){\n    new_size = 1024/sizeof(struct _ht);\n  }\n  if( new_size==pH->htsize ) return 0;\n  sqlite3BeginBenignMalloc();\n  new_ht = (struct _ht *)sqlite3Malloc( new_size*sizeof(struct _ht) );\n  sqlite3EndBenignMalloc();\n  if( new_ht==0 ) return 0;\n  sqlite3_free(pH->ht);\n  pH->ht = new_ht;\n  pH->htsize = new_size = sqlite3MallocSize(new_ht)/sizeof(struct _ht);\n  memset(new_ht, 0, new_size*sizeof(struct _ht));\n  for(elem=pH->first, pH->first=0; elem; elem = next_elem){\n    next_elem = elem->next;\n    insertElement(pH, &new_ht[elem->h % new_size], elem);\n  }\n  return 1;\n}",
+      "call_count": 1,
+      "calls": [
+        "insertElement",
+        "sqlite3EndBenignMalloc",
+        "sqlite3MallocSize",
+        "memset",
+        "sqlite3BeginBenignMalloc",
+        "sqlite3Malloc"
+      ],
+      "name": "rehash"
+    },
+    {
+      "body": "static void __attribute__((noinline)) deleteTable(sqlite3 *db, Table *pTable){\n  Index *pIndex, *pNext;\n  int nLookaside = 0;\n  ((void) sizeof ((db!=0) ? 1 : 0), __extension__ ({ if (db!=0) ; else __assert_fail (\"db!=0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  if( !db->mallocFailed && (pTable->tabFlags & 0x00004000)==0 ){\n    nLookaside = sqlite3LookasideUsed(db, 0);\n  }\n  for(pIndex = pTable->pIndex; pIndex; pIndex=pNext){\n    pNext = pIndex->pNext;\n    ((void) sizeof ((pIndex->pSchema==pTable->pSchema || (((pTable)->eTabType==1) && pIndex->idxType!=0)) ? 1 : 0), __extension__ ({ if (pIndex->pSchema==pTable->pSchema || (((pTable)->eTabType==1) && pIndex->idxType!=0)) ; else __assert_fail (\"pIndex->pSchema==pTable->pSchema || (IsVirtual(pTable) && pIndex->idxType!=SQLITE_IDXTYPE_APPDEF)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    if( db->pnBytesFreed==0 && !((pTable)->eTabType==1) ){\n      char *zName = pIndex->zName;\n      Index *pOld = sqlite3HashInsert(\n         &pIndex->pSchema->idxHash, zName, 0\n      );\n      ((void) sizeof ((db==0 || sqlite3SchemaMutexHeld(db, 0, pIndex->pSchema)) ? 1 : 0), __extension__ ({ if (db==0 || sqlite3SchemaMutexHeld(db, 0, pIndex->pSchema)) ; else __assert_fail (\"db==0 || sqlite3SchemaMutexHeld(db, 0, pIndex->pSchema)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n      ((void) sizeof ((pOld==pIndex || pOld==0) ? 1 : 0), __extension__ ({ if (pOld==pIndex || pOld==0) ; else __assert_fail (\"pOld==pIndex || pOld==0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    }\n    sqlite3FreeIndex(db, pIndex);\n  }\n  if( ((pTable)->eTabType==0) ){\n    sqlite3FkDelete(db, pTable);\n  }\n  else if( ((pTable)->eTabType==1) ){\n    sqlite3VtabClear(db, pTable);\n  }\n  else{\n    ((void) sizeof ((((pTable)->eTabType==2)) ? 1 : 0), __extension__ ({ if (((pTable)->eTabType==2)) ; else __assert_fail (\"IsView(pTable)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    sqlite3SelectDelete(db, pTable->u.view.pSelect);\n  }\n  sqlite3DeleteColumnNames(db, pTable);\n  sqlite3DbFree(db, pTable->zName);\n  sqlite3DbFree(db, pTable->zColAff);\n  sqlite3ExprListDelete(db, pTable->pCheck);\n  sqlite3DbFree(db, pTable);\n  ((void) sizeof ((nLookaside==0 || nLookaside==sqlite3LookasideUsed(db,0)) ? 1 : 0), __extension__ ({ if (nLookaside==0 || nLookaside==sqlite3LookasideUsed(db,0)) ; else __assert_fail (\"nLookaside==0 || nLookaside==sqlite3LookasideUsed(db,0)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n}",
+      "call_count": 1,
+      "calls": [
+        "sqlite3HashInsert",
+        "sqlite3LookasideUsed",
+        "sqlite3SelectDelete",
+        "sqlite3SchemaMutexHeld",
+        "sqlite3FreeIndex",
+        "sqlite3FkDelete",
+        "sqlite3VtabClear",
+        "sqlite3DeleteColumnNames",
+        "sqlite3DbFree",
+        "sqlite3ExprListDelete",
+        "__assert_fail"
+      ],
+      "name": "deleteTable"
+    },
+    {
+      "body": "static u32 countLookasideSlots(LookasideSlot *p){\n  u32 cnt = 0;\n  while( p ){\n    p = p->pNext;\n    cnt++;\n  }\n  return cnt;\n}",
+      "call_count": 1,
+      "calls": [],
+      "name": "countLookasideSlots"
+    },
+    {
+      "body": "void sqlite3SubqueryDelete(sqlite3 *db, Subquery *pSubq){\n  ((void) sizeof ((pSubq!=0 && pSubq->pSelect!=0) ? 1 : 0), __extension__ ({ if (pSubq!=0 && pSubq->pSelect!=0) ; else __assert_fail (\"pSubq!=0 && pSubq->pSelect!=0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  sqlite3SelectDelete(db, pSubq->pSelect);\n  sqlite3DbFree(db, pSubq);\n}",
+      "call_count": 1,
+      "calls": [
+        "sqlite3DbFree",
+        "__assert_fail",
+        "sqlite3SelectDelete"
+      ],
+      "name": "sqlite3SubqueryDelete"
+    },
+    {
+      "body": "void sqlite3FkDelete(sqlite3 *db, Table *pTab){\n  FKey *pFKey;\n  FKey *pNext;\n  ((void) sizeof ((((pTab)->eTabType==0)) ? 1 : 0), __extension__ ({ if (((pTab)->eTabType==0)) ; else __assert_fail (\"IsOrdinaryTable(pTab)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  ((void) sizeof ((db!=0) ? 1 : 0), __extension__ ({ if (db!=0) ; else __assert_fail (\"db!=0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  for(pFKey=pTab->u.tab.pFKey; pFKey; pFKey=pNext){\n    ((void) sizeof ((db==0 || sqlite3SchemaMutexHeld(db, 0, pTab->pSchema)) ? 1 : 0), __extension__ ({ if (db==0 || sqlite3SchemaMutexHeld(db, 0, pTab->pSchema)) ; else __assert_fail (\"db==0 || sqlite3SchemaMutexHeld(db, 0, pTab->pSchema)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    if( db->pnBytesFreed==0 ){\n      if( pFKey->pPrevTo ){\n        pFKey->pPrevTo->pNextTo = pFKey->pNextTo;\n      }else{\n        const char *z = (pFKey->pNextTo ? pFKey->pNextTo->zTo : pFKey->zTo);\n        sqlite3HashInsert(&pTab->pSchema->fkeyHash, z, pFKey->pNextTo);\n      }\n      if( pFKey->pNextTo ){\n        pFKey->pNextTo->pPrevTo = pFKey->pPrevTo;\n      }\n    }\n    ((void) sizeof ((pFKey->isDeferred==0 || pFKey->isDeferred==1) ? 1 : 0), __extension__ ({ if (pFKey->isDeferred==0 || pFKey->isDeferred==1) ; else __assert_fail (\"pFKey->isDeferred==0 || pFKey->isDeferred==1\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    fkTriggerDelete(db, pFKey->apTrigger[0]);\n    fkTriggerDelete(db, pFKey->apTrigger[1]);\n    pNext = pFKey->pNextFrom;\n    sqlite3DbFree(db, pFKey);\n  }\n}",
+      "call_count": 1,
+      "calls": [
+        "__assert_fail",
+        "sqlite3DbFree",
+        "fkTriggerDelete",
+        "sqlite3HashInsert",
+        "sqlite3SchemaMutexHeld"
+      ],
+      "name": "sqlite3FkDelete"
+    },
+    {
+      "body": "void sqlite3VtabClear(sqlite3 *db, Table *p){\n  ((void) sizeof ((((p)->eTabType==1)) ? 1 : 0), __extension__ ({ if (((p)->eTabType==1)) ; else __assert_fail (\"IsVirtual(p)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  ((void) sizeof ((db!=0) ? 1 : 0), __extension__ ({ if (db!=0) ; else __assert_fail (\"db!=0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  if( db->pnBytesFreed==0 ) vtabDisconnectAll(0, p);\n  if( p->u.vtab.azArg ){\n    int i;\n    for(i=0; i<p->u.vtab.nArg; i++){\n      if( i!=1 ) sqlite3DbFree(db, p->u.vtab.azArg[i]);\n    }\n    sqlite3DbFree(db, p->u.vtab.azArg);\n  }\n}",
+      "call_count": 1,
+      "calls": [
+        "vtabDisconnectAll",
+        "__assert_fail",
+        "sqlite3DbFree"
+      ],
+      "name": "sqlite3VtabClear"
+    },
+    {
+      "body": "static __attribute__((noinline)) char *strAccumFinishRealloc(StrAccum *p){\n  char *zText;\n  ((void) sizeof ((p->mxAlloc>0 && !(((p)->printfFlags & 0x04)!=0)) ? 1 : 0), __extension__ ({ if (p->mxAlloc>0 && !(((p)->printfFlags & 0x04)!=0)) ; else __assert_fail (\"p->mxAlloc>0 && !isMalloced(p)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  zText = sqlite3DbMallocRaw(p->db, 1+(u64)p->nChar );\n  if( zText ){\n    memcpy(zText, p->zText, p->nChar+1);\n    p->printfFlags |= 0x04;\n  }else{\n    sqlite3StrAccumSetError(p, 7);\n  }\n  p->zText = zText;\n  return zText;\n}",
+      "call_count": 1,
+      "calls": [
+        "__assert_fail",
+        "sqlite3DbMallocRaw",
+        "memcpy",
+        "sqlite3StrAccumSetError"
+      ],
+      "name": "strAccumFinishRealloc"
+    },
+    {
+      "body": "static __attribute__((noinline)) void *dbMallocRawFinish(sqlite3 *db, u64 n){\n  void *p;\n  ((void) sizeof ((db!=0) ? 1 : 0), __extension__ ({ if (db!=0) ; else __assert_fail (\"db!=0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  p = sqlite3Malloc(n);\n  if( !p ) sqlite3OomFault(db);\n  ;\n  return p;\n}",
+      "call_count": 1,
+      "calls": [
+        "__assert_fail",
+        "sqlite3Malloc",
+        "sqlite3OomFault"
+      ],
+      "name": "dbMallocRawFinish"
+    }
+  ],
+  "min_call_count": 1,
+  "root": "sqlite3_drop_modules"
+}

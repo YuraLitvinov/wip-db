@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_blob_bytes(sqlite3_blob *pBlob){\n  Incrblob *p = (Incrblob *)pBlob;\n  return (p && p->pStmt) ? p->nByte : 0;\n}",
+      "call_count": 3,
+      "calls": [],
+      "name": "sqlite3_blob_bytes"
+    }
+  ],
+  "min_call_count": 0,
+  "root": "sqlite3_blob_bytes"
+}

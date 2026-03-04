@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_system_errno(sqlite3 *db){\n  return db ? db->iSysErrno : 0;\n}",
+      "call_count": 0,
+      "calls": [],
+      "name": "sqlite3_system_errno"
+    }
+  ],
+  "min_call_count": 0,
+  "root": "sqlite3_system_errno"
+}

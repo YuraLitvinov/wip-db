@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_stmt_isexplain(sqlite3_stmt *pStmt){\n  return pStmt ? ((Vdbe*)pStmt)->explain : 0;\n}",
+      "call_count": 1,
+      "calls": [],
+      "name": "sqlite3_stmt_isexplain"
+    }
+  ],
+  "min_call_count": 0,
+  "root": "sqlite3_stmt_isexplain"
+}

@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_libversion_number(void){ return 3051002; }",
+      "call_count": 2,
+      "calls": [],
+      "name": "sqlite3_libversion_number"
+    }
+  ],
+  "min_call_count": 0,
+  "root": "sqlite3_libversion_number"
+}

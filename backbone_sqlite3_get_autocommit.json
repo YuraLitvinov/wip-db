@@ -1,0 +1,21 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_get_autocommit(sqlite3 *db){\n  if( !sqlite3SafetyCheckOk(db) ){\n    (void)sqlite3MisuseError(188789);\n    return 0;\n  }\n  return db->autoCommit;\n}",
+      "call_count": 0,
+      "calls": [
+        "sqlite3MisuseError",
+        "sqlite3SafetyCheckOk"
+      ],
+      "name": "sqlite3_get_autocommit"
+    },
+    {
+      "body": "static void logBadConnection(const char *zType){\n  sqlite3_log(21,\n     \"API call with %s database connection pointer\",\n     zType\n  );\n}",
+      "call_count": 2,
+      "calls": [],
+      "name": "logBadConnection"
+    }
+  ],
+  "min_call_count": 2,
+  "root": "sqlite3_get_autocommit"
+}

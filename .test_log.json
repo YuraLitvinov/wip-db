@@ -1,0 +1,136 @@
+{
+  "history": [
+    {
+      "timestamp": "2026-03-04T15:19:41.872378",
+      "model": "haiku",
+      "function": "sqlite3_blob_bytes",
+      "tests": [],
+      "status": "pass",
+      "current_issue": null
+    },
+    {
+      "timestamp": "2026-03-04T15:19:41.916924",
+      "model": "haiku",
+      "function": "sqlite3_blob_bytes",
+      "tests": [
+        "e_blobbytes.test",
+        "e_blobopen.test",
+        "incrblob3.test"
+      ],
+      "status": "pass",
+      "current_issue": null
+    },
+    {
+      "timestamp": "2026-03-04T15:22:38.712312",
+      "model": "haiku",
+      "function": "sqlite3_system_errno,sqlite3_stmt_isexplain,sqlite3_soft_heap_limit",
+      "tests": [
+        "capi3d.test",
+        "permutations.test"
+      ],
+      "status": "fail",
+      "current_issue": "2 test(s) failed (sqlite3_stmt_isexplain: 1 failures)"
+    },
+    {
+      "timestamp": "2026-03-04T15:22:38.753467",
+      "model": "haiku",
+      "function": "sqlite3_system_errno,sqlite3_stmt_isexplain,sqlite3_soft_heap_limit",
+      "tests": [
+        "capi3.test",
+        "walseh1.test",
+        "attach2.test",
+        "avtrans.test",
+        "cache.test",
+        "capi3b.test",
+        "exclusive2.test",
+        "exclusive.test",
+        "incrblob.test",
+        "index4.test",
+        "indexfault.test",
+        "ioerr3.test",
+        "ioerr5.test",
+        "lock2.test",
+        "lock6.test",
+        "malloc5.test",
+        "pageropt.test",
+        "softheap1.test",
+        "sort.test"
+      ],
+      "status": "pass",
+      "current_issue": null
+    },
+    {
+      "timestamp": "2026-03-04T15:37:34.745549",
+      "model": "haiku",
+      "function": "sqlite3_blob_bytes,sqlite3_system_errno,sqlite3_stmt_isexplain,sqlite3_soft_heap_limit",
+      "tests": [
+        "capi3d.test",
+        "permutations.test"
+      ],
+      "status": "fail",
+      "current_issue": "2 test(s) failed (sqlite3_stmt_isexplain: 1 failures)"
+    },
+    {
+      "timestamp": "2026-03-04T15:37:34.789637",
+      "model": "haiku",
+      "function": "sqlite3_blob_bytes,sqlite3_system_errno,sqlite3_stmt_isexplain,sqlite3_soft_heap_limit",
+      "tests": [
+        "e_blobbytes.test",
+        "e_blobopen.test",
+        "incrblob3.test",
+        "capi3.test",
+        "walseh1.test",
+        "attach2.test",
+        "avtrans.test",
+        "cache.test",
+        "capi3b.test",
+        "exclusive2.test",
+        "exclusive.test",
+        "incrblob.test",
+        "index4.test",
+        "indexfault.test",
+        "ioerr3.test",
+        "ioerr5.test",
+        "lock2.test",
+        "lock6.test",
+        "malloc5.test",
+        "pageropt.test",
+        "softheap1.test",
+        "sort.test"
+      ],
+      "status": "pass",
+      "current_issue": null
+    }
+  ],
+  "current": {
+    "timestamp": "2026-03-04T15:37:34.789637",
+    "model": "haiku",
+    "function": "sqlite3_blob_bytes,sqlite3_system_errno,sqlite3_stmt_isexplain,sqlite3_soft_heap_limit",
+    "tests": [
+      "e_blobbytes.test",
+      "e_blobopen.test",
+      "incrblob3.test",
+      "capi3.test",
+      "walseh1.test",
+      "attach2.test",
+      "avtrans.test",
+      "cache.test",
+      "capi3b.test",
+      "exclusive2.test",
+      "exclusive.test",
+      "incrblob.test",
+      "index4.test",
+      "indexfault.test",
+      "ioerr3.test",
+      "ioerr5.test",
+      "lock2.test",
+      "lock6.test",
+      "malloc5.test",
+      "pageropt.test",
+      "softheap1.test",
+      "sort.test"
+    ],
+    "status": "pass",
+    "current_issue": null
+  }
+}

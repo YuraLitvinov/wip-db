@@ -1,0 +1,20 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_stricmp(const char *zLeft, const char *zRight){\n  if( zLeft==0 ){\n    return zRight ? -1 : 0;\n  }else if( zRight==0 ){\n    return 1;\n  }\n  return sqlite3StrICmp(zLeft, zRight);\n}",
+      "call_count": 55,
+      "calls": [
+        "sqlite3StrICmp"
+      ],
+      "name": "sqlite3_stricmp"
+    },
+    {
+      "body": "int sqlite3StrICmp(const char *zLeft, const char *zRight){\n  unsigned char *a, *b;\n  int c, x;\n  a = (unsigned char *)zLeft;\n  b = (unsigned char *)zRight;\n  for(;;){\n    c = *a;\n    x = *b;\n    if( c==x ){\n      if( c==0 ) break;\n    }else{\n      c = (int)sqlite3UpperToLower[c] - (int)sqlite3UpperToLower[x];\n      if( c ) break;\n    }\n    a++;\n    b++;\n  }\n  return c;\n}",
+      "call_count": 44,
+      "calls": [],
+      "name": "sqlite3StrICmp"
+    }
+  ],
+  "min_call_count": 44,
+  "root": "sqlite3_stricmp"
+}

@@ -13,7 +13,17 @@ use std::os::raw::*;
 
 pub type Sqlite3Stmt = c_void;
 
-#[no_mangle]
-pub extern "C" fn sqlite3_stmt_isexplain(pStmt: *mut sqlite3_stmt) -> c_int {
-    todo!()
+#[repr(C)]
+struct Vdbe {
+    explain: c_int,
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sqlite3_stmt_isexplain(pStmt: *mut Sqlite3Stmt) -> c_int {
+    if pStmt.is_null() {
+        0
+    } else {
+        let vdbe = pStmt as *mut Vdbe;
+        unsafe { (*vdbe).explain }
+    }
 }

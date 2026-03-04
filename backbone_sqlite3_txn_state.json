@@ -1,0 +1,23 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_txn_state(sqlite3 *db, const char *zSchema){\n  int iDb, nDb;\n  int iTxn = -1;\n  if( !sqlite3SafetyCheckOk(db) ){\n    (void)sqlite3MisuseError(186192);\n    return -1;\n  }\n  sqlite3_mutex_enter(db->mutex);\n  if( zSchema ){\n    nDb = iDb = sqlite3FindDbName(db, zSchema);\n    if( iDb<0 ) nDb--;\n  }else{\n    iDb = 0;\n    nDb = db->nDb-1;\n  }\n  for(; iDb<=nDb; iDb++){\n    Btree *pBt = db->aDb[iDb].pBt;\n    int x = pBt!=0 ? sqlite3BtreeTxnState(pBt) : 0;\n    if( x>iTxn ) iTxn = x;\n  }\n  sqlite3_mutex_leave(db->mutex);\n  return iTxn;\n}",
+      "call_count": 0,
+      "calls": [
+        "sqlite3MisuseError",
+        "sqlite3BtreeTxnState",
+        "sqlite3SafetyCheckOk",
+        "sqlite3FindDbName"
+      ],
+      "name": "sqlite3_txn_state"
+    },
+    {
+      "body": "static void logBadConnection(const char *zType){\n  sqlite3_log(21,\n     \"API call with %s database connection pointer\",\n     zType\n  );\n}",
+      "call_count": 2,
+      "calls": [],
+      "name": "logBadConnection"
+    }
+  ],
+  "min_call_count": 2,
+  "root": "sqlite3_txn_state"
+}

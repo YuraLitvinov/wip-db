@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_release_memory(int n){\n  (void)(n);\n  return 0;\n}",
+      "call_count": 2,
+      "calls": [],
+      "name": "sqlite3_release_memory"
+    }
+  ],
+  "min_call_count": 0,
+  "root": "sqlite3_release_memory"
+}

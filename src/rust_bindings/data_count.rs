@@ -28,7 +28,22 @@ use std::os::raw::*;
 
 pub type Sqlite3Stmt = c_void;
 
-#[no_mangle]
-pub extern "C" fn sqlite3_data_count(pStmt: *mut sqlite3_stmt) -> c_int {
-    todo!()
+#[repr(C)]
+struct Vdbe {
+    pResultRow: *mut c_void,
+    nResColumn: c_int,
+}
+
+pub extern "C" fn sqlite3_data_count(pStmt: *mut Sqlite3Stmt) -> c_int {
+    if pStmt.is_null() {
+        0
+    } else {
+        let vm = pStmt as *mut Vdbe;
+        let vdbe = unsafe { &*vm };
+        if vdbe.pResultRow.is_null() {
+            0
+        } else {
+            vdbe.nResColumn
+        }
+    }
 }

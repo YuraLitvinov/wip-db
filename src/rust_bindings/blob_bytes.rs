@@ -19,7 +19,26 @@ use std::os::raw::*;
 
 pub type Sqlite3Blob = c_void;
 
-#[no_mangle]
-pub extern "C" fn sqlite3_blob_bytes(blob: *mut sqlite3_blob) -> c_int {
-    todo!()
+#[repr(C)]
+struct Incrblob {
+    nByte: c_int,
+    iOffset: c_int,
+    iCol: u16,
+    pCsr: *mut c_void,
+    pStmt: *mut c_void,
+    db: *mut c_void,
+    zDb: *mut c_char,
+    pTab: *mut c_void,
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sqlite3_blob_bytes(blob: *mut Sqlite3Blob) -> c_int {
+    let p = blob as *mut Incrblob;
+    if !p.is_null() {
+        let incrblob = unsafe { &*p };
+        if !incrblob.pStmt.is_null() {
+            return incrblob.nByte;
+        }
+    }
+    0
 }

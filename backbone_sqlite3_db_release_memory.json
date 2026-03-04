@@ -1,0 +1,72 @@
+{
+  "functions": [
+    {
+      "body": "int sqlite3_db_release_memory(sqlite3 *db){\n  int i;\n  if( !sqlite3SafetyCheckOk(db) ) return sqlite3MisuseError(185780);\n  sqlite3_mutex_enter(db->mutex);\n  sqlite3BtreeEnterAll(db);\n  for(i=0; i<db->nDb; i++){\n    Btree *pBt = db->aDb[i].pBt;\n    if( pBt ){\n      Pager *pPager = sqlite3BtreePager(pBt);\n      sqlite3PagerShrink(pPager);\n    }\n  }\n  sqlite3BtreeLeaveAll(db);\n  sqlite3_mutex_leave(db->mutex);\n  return 0;\n}",
+      "call_count": 1,
+      "calls": [
+        "sqlite3BtreePager",
+        "sqlite3MisuseError",
+        "sqlite3BtreeEnterAll",
+        "sqlite3BtreeLeaveAll",
+        "sqlite3SafetyCheckOk",
+        "sqlite3PagerShrink"
+      ],
+      "name": "sqlite3_db_release_memory"
+    },
+    {
+      "body": "static void __attribute__((noinline)) btreeEnterAll(sqlite3 *db){\n  int i;\n  u8 skipOk = 1;\n  Btree *p;\n  ((void) sizeof ((sqlite3_mutex_held(db->mutex)) ? 1 : 0), __extension__ ({ if (sqlite3_mutex_held(db->mutex)) ; else __assert_fail (\"sqlite3_mutex_held(db->mutex)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  for(i=0; i<db->nDb; i++){\n    p = db->aDb[i].pBt;\n    if( p && p->sharable ){\n      sqlite3BtreeEnter(p);\n      skipOk = 0;\n    }\n  }\n  db->noSharedCache = skipOk;\n}",
+      "call_count": 1,
+      "calls": [
+        "sqlite3BtreeEnter",
+        "__assert_fail"
+      ],
+      "name": "btreeEnterAll"
+    },
+    {
+      "body": "static void __attribute__((noinline)) btreeLockCarefully(Btree *p){\n  Btree *pLater;\n  if( sqlite3_mutex_try(p->pBt->mutex)==0 ){\n    p->pBt->db = p->db;\n    p->locked = 1;\n    return;\n  }\n  for(pLater=p->pNext; pLater; pLater=pLater->pNext){\n    ((void) sizeof ((pLater->sharable) ? 1 : 0), __extension__ ({ if (pLater->sharable) ; else __assert_fail (\"pLater->sharable\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    ((void) sizeof ((pLater->pNext==0 || pLater->pNext->pBt>pLater->pBt) ? 1 : 0), __extension__ ({ if (pLater->pNext==0 || pLater->pNext->pBt>pLater->pBt) ; else __assert_fail (\"pLater->pNext==0 || pLater->pNext->pBt>pLater->pBt\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    ((void) sizeof ((!pLater->locked || pLater->wantToLock>0) ? 1 : 0), __extension__ ({ if (!pLater->locked || pLater->wantToLock>0) ; else __assert_fail (\"!pLater->locked || pLater->wantToLock>0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n    if( pLater->locked ){\n      unlockBtreeMutex(pLater);\n    }\n  }\n  lockBtreeMutex(p);\n  for(pLater=p->pNext; pLater; pLater=pLater->pNext){\n    if( pLater->wantToLock ){\n      lockBtreeMutex(pLater);\n    }\n  }\n}",
+      "call_count": 1,
+      "calls": [
+        "unlockBtreeMutex",
+        "lockBtreeMutex",
+        "__assert_fail"
+      ],
+      "name": "btreeLockCarefully"
+    },
+    {
+      "body": "static void lockBtreeMutex(Btree *p){\n  ((void) sizeof ((p->locked==0) ? 1 : 0), __extension__ ({ if (p->locked==0) ; else __assert_fail (\"p->locked==0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  ((void) sizeof ((sqlite3_mutex_notheld(p->pBt->mutex)) ? 1 : 0), __extension__ ({ if (sqlite3_mutex_notheld(p->pBt->mutex)) ; else __assert_fail (\"sqlite3_mutex_notheld(p->pBt->mutex)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  ((void) sizeof ((sqlite3_mutex_held(p->db->mutex)) ? 1 : 0), __extension__ ({ if (sqlite3_mutex_held(p->db->mutex)) ; else __assert_fail (\"sqlite3_mutex_held(p->db->mutex)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  sqlite3_mutex_enter(p->pBt->mutex);\n  p->pBt->db = p->db;\n  p->locked = 1;\n}",
+      "call_count": 1,
+      "calls": [
+        "__assert_fail"
+      ],
+      "name": "lockBtreeMutex"
+    },
+    {
+      "body": "static void __attribute__((noinline)) btreeLeaveAll(sqlite3 *db){\n  int i;\n  Btree *p;\n  ((void) sizeof ((sqlite3_mutex_held(db->mutex)) ? 1 : 0), __extension__ ({ if (sqlite3_mutex_held(db->mutex)) ; else __assert_fail (\"sqlite3_mutex_held(db->mutex)\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  for(i=0; i<db->nDb; i++){\n    p = db->aDb[i].pBt;\n    if( p ) sqlite3BtreeLeave(p);\n  }\n}",
+      "call_count": 1,
+      "calls": [
+        "sqlite3BtreeLeave",
+        "__assert_fail"
+      ],
+      "name": "btreeLeaveAll"
+    },
+    {
+      "body": "void sqlite3PagerShrink(Pager *pPager){\n  sqlite3PcacheShrink(pPager->pPCache);\n}",
+      "call_count": 1,
+      "calls": [
+        "sqlite3PcacheShrink"
+      ],
+      "name": "sqlite3PagerShrink"
+    },
+    {
+      "body": "void sqlite3PcacheShrink(PCache *pCache){\n  ((void) sizeof ((pCache->pCache!=0) ? 1 : 0), __extension__ ({ if (pCache->pCache!=0) ; else __assert_fail (\"pCache->pCache!=0\", \"/home/yurii-sama/Projects/rust-sqlite/sqlite-src-3510200\n  sqlite3Config.pcache2.xShrink(pCache->pCache);\n}",
+      "call_count": 1,
+      "calls": [
+        "__assert_fail",
+        "xShrink"
+      ],
+      "name": "sqlite3PcacheShrink"
+    }
+  ],
+  "min_call_count": 1,
+  "root": "sqlite3_db_release_memory"
+}

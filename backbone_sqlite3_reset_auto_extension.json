@@ -1,0 +1,14 @@
+{
+  "functions": [
+    {
+      "body": "void sqlite3_reset_auto_extension(void){\n  if( sqlite3_initialize()==0 )\n  {\n    sqlite3_mutex *mutex = sqlite3MutexAlloc(2);\n    ;\n    sqlite3_mutex_enter(mutex);\n    sqlite3_free(sqlite3Autoext.aExt);\n    sqlite3Autoext.aExt = 0;\n    sqlite3Autoext.nExt = 0;\n    sqlite3_mutex_leave(mutex);\n  }\n}",
+      "call_count": 1,
+      "calls": [
+        "sqlite3MutexAlloc"
+      ],
+      "name": "sqlite3_reset_auto_extension"
+    }
+  ],
+  "min_call_count": 2,
+  "root": "sqlite3_reset_auto_extension"
+}

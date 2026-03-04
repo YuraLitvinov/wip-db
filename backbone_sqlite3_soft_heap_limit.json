@@ -1,0 +1,12 @@
+{
+  "functions": [
+    {
+      "body": "void sqlite3_soft_heap_limit(int n){\n  if( n<0 ) n = 0;\n  sqlite3_soft_heap_limit64(n);\n}",
+      "call_count": 0,
+      "calls": [],
+      "name": "sqlite3_soft_heap_limit"
+    }
+  ],
+  "min_call_count": 0,
+  "root": "sqlite3_soft_heap_limit"
+}

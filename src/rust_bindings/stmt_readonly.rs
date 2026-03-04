@@ -44,7 +44,15 @@ use std::os::raw::*;
 
 pub type Sqlite3Stmt = c_void;
 
-#[no_mangle]
-pub extern "C" fn sqlite3_stmt_readonly(pStmt: *mut sqlite3_stmt) -> c_int {
-    todo!()
+#[repr(C)]
+struct Vdbe {
+    readOnly: c_int,
+}
+
+pub extern "C" fn sqlite3_stmt_readonly(pStmt: *mut Sqlite3Stmt) -> c_int {
+    if pStmt.is_null() {
+        1
+    } else {
+        unsafe { (*(pStmt as *mut Vdbe)).readOnly }
+    }
 }

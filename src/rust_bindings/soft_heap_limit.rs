@@ -13,7 +13,17 @@
 //!
 use std::os::raw::*;
 
-#[no_mangle]
-pub extern "C" fn sqlite3_soft_heap_limit(N: c_int) {
-    todo!()
+unsafe extern "C" {
+    fn sqlite3_soft_heap_limit64(n: i64);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn sqlite3_soft_heap_limit(n: c_int) {
+    let mut limit = n;
+    if limit < 0 {
+        limit = 0;
+    }
+    unsafe {
+        sqlite3_soft_heap_limit64(limit as i64);
+    }
 }

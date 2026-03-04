@@ -38,5 +38,5 @@ use std::os::raw::*;
 
 #[no_mangle]
 pub extern "C" fn sqlite3_libversion_number() -> c_int {
-    todo!()
+    3051002
 }
